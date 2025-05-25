@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoginService } from '../../services/http/login.service';
 
 @Component({
   selector: 'app-login',
@@ -16,9 +18,19 @@ export class LoginComponent {
 
   showPassword:boolean=false;
 
-
+  constructor(private router:Router, private loginService:LoginService){}
 
   submit(){
-
+    let username= this.loginForm.value.username;
+    let password= this.loginForm.value.password || "";
+    this.loginService.login(username, password).subscribe(
+    {
+      next:(response)=>{
+        this.router.navigate(['/dashboard']);
+      },
+      error:(error)=>{
+        //TODO
+      }  
+    });
   }
 }
