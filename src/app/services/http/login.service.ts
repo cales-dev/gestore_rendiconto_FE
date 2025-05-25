@@ -10,17 +10,17 @@ export class LoginService {
   constructor(private http:HttpClient) { }
 
   public login(username:string,password:string){
-      let url=environment + "api/login";
+      let url=environment.baseUrl + "api/login";
       const formData= new FormData();
 
       formData.append("username", username);
       formData.append("password", password);
 
-      this.http.post(url, formData);
+      return this.http.post(url, formData);
   }
 
   public checkLogin(){
-    let url=environment + "api/check/login";
-    this.http.get(url);
+    let url=environment.baseUrl + "api/check/login";
+    return this.http.get(url);
   }
 }
