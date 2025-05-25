@@ -17,5 +17,10 @@ export class LoginService {
       formData.append("password", password);
 
       this.http.post(url, formData);
-    }
+  }
+
+  public checkLogin(){
+    let url=environment + "api/check/login";
+    this.http.get(url);
+  }
 }
