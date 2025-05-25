@@ -1,1 +1,55 @@
-<p>login works!</p>
+<div class="bg-image pt-4">
+    <div class="w-75 d-flex justify-content-between">
+      <div class="d-flex justify-content-center align-items-center w-50">
+        <div style="color: white;">
+          <img class="icon" src="assets/LogoTitanO.png" alt=""><br>
+          <span class="fw-semibold h2">Portale rendicontazione</span><br><br>
+          <span class="fw-semibold">Il portale progettato per agevolare la gestione della rendicontazione di enti pubblici che richiedono servizi di recupero crediti</span>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center align-items-center w-50">
+        <form [formGroup]="loginForm" class="bg-white border p-4 rounded-3 w-75" (ngSubmit)="submit()">
+          <span class="w-100  d-flex justify-content-center fw-semibold h4 text-center">
+            Accedi al portale
+          </span>
+          <!-- Email input -->
+          <div class="form-outline mt-4 mb-4">
+            <input
+              type="text"
+              formControlName="username"
+              id="emailInput"
+              class="form-control"
+              placeholder="Nome Utente / Email"
+              required />
+          </div>
+          <div class="form-outline mb-4 d-flex align-items-center position-relative">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              id="passwordInput"
+              class="form-control pr-5"  
+              placeholder="Password"
+              required
+            />
+            <i
+              [class]="showPassword ? 'bi-eye-fill' : 'bi-eye-slash-fill'"
+              class="icon-color-gray cursor-pointer position-absolute"
+              (click)="showPassword = !showPassword"
+              style="right: 10px; cursor: pointer;" 
+            ></i>
+          </div>
+
+          <div class="col">
+            <button type="submit" [disabled]="!loginForm.valid" class="btn col-12" style="background-color: #256EB3;color: white;">
+              Accedi
+            </button>
+          </div>
+          <br>
+          <div>
+            <a routerLink="/forgot-password" class="col-8 text-sm-left link-secondary"> Password dimenticata </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

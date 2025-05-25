@@ -1,0 +1,13 @@
+.bg-image{
+  height: auto;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #174F8499, #174F8499), 
+  url('/assets/bg-signup.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: row;
+}
