@@ -21,6 +21,6 @@ export class LoginService {
 
   public checkLogin(){
     let url=environment.baseUrl + "api/check/login/";
-    return this.http.get(url);
+    return this.http.get(url, {withCredentials:true});
   }
 }

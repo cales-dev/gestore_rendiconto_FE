@@ -41,8 +41,12 @@
           </div>
 
           <div class="col">
-            <button type="submit" [disabled]="!loginForm.valid" class="btn col-12" style="background-color: #256EB3;color: white;">
+            <button type="submit" [disabled]="!loginForm.valid" class="btn col-12" style="background-color: #256EB3;color: white;" *ngIf="!isLoading">
               Accedi
+            </button>
+            <button type="submit" [disabled]="true" class="btn col-12" style="background-color: #256EB3;color: white;" *ngIf="isLoading">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Caricamento...
             </button>
           </div>
           <br>

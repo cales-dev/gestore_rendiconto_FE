@@ -22,6 +22,7 @@ export class AppComponent {
         }
       },
       error:()=>{
+        this.router.navigate(['/login']);
         //TODO error managment
       }
     })  

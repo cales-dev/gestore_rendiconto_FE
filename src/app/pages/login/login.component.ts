@@ -17,18 +17,20 @@ export class LoginComponent {
   });
 
   showPassword:boolean=false;
-
+  isLoading:boolean=false;
   constructor(private router:Router, private loginService:LoginService){}
 
   submit(){
-    let username= this.loginForm.value.username;
-    let password= this.loginForm.value.password || "";
+    this.isLoading = true;
+    let username = this.loginForm.value.username;
+    let password = this.loginForm.value.password || "";
     this.loginService.login(username, password).subscribe(
     {
       next:(response)=>{
         this.router.navigate(['/dashboard']);
       },
       error:(error)=>{
+        this.isLoading=false;
         //TODO
       }  
     });
