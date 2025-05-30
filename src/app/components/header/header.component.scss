@@ -1,0 +1,64 @@
+.nav-link.active {
+    border-radius: 10px;
+    background-color: #555a60;
+}
+.nav-item {
+    cursor: pointer;
+    border-radius: 10px;
+}
+nav,
+.bar {
+  min-height: 2.6rem;
+}
+
+nav {
+  background-color: #256eb3;
+  position: sticky;
+  top: 0;
+}
+
+/*.vr {*/
+/*  height: 50px;*/
+/*}*/
+
+.navbar-dark {
+  color: #fff;
+}
+
+.vr {
+  color: #0e3a65 !important;
+  width: 2px;
+}
+.active{
+    background-color:#0e3a65 !important;;
+}
+.navbar-brand {
+  width: 100px;
+  /*background-image: url("../assets/LogoTitanE.png");*/
+  background-size: contain;
+  height: 60px;
+  background-repeat: no-repeat;
+  background-position: center ;
+}
+
+
+.bar {
+  background-color: #06c;
+}
+
+/* Default styling for larger screens */
+.sidebar {
+    width: 200px;   /* Fixed width */
+    height: calc(100vh - 57.59px);  /* 100% of the viewport height */
+    background-color: #343a40;
+    color: white;
+    padding-top: 20px;
+}
+  
+/* For smaller screens (e.g., tablets or mobile devices) */
+@media (max-height: 750px) {
+    .sidebar {
+        width: 175px;
+        height: calc(100vh - 57.59px);
+    }
+}

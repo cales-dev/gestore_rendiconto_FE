@@ -1,1 +1,73 @@
-<p>dashboard works!</p>
+<app-header [username]="username"> </app-header>
+<div class="dashboard-container">
+    <!-- <div class="filters">
+      <app-ente-selector [selectedEnte]="selectedEnte" [enti]="enti" [title]="'Ente:'" (enteChanged)="onEnteChange($event)"></app-ente-selector>
+      <app-date-selector (dateChanged)="onDateChange($event)"></app-date-selector>
+      <app-ente-selector [selectedEnte]="selectedOperation" [enti]="operation" [title]="'Operazione:'" (enteChanged)="onOperationChange($event)"></app-ente-selector>
+      <app-recupero-selector [title]="'Contabilizza solo recupero'" [isChecked]="isRecupero" (onChecked)="onRecuperoChange($event)"></app-recupero-selector> 
+      <button class="btn btn-primary" *ngIf="(selectedDate[1]!='')&&(selectedEnte!='')&&(selectedOperation!='')&&!isLoadingReport" (click)="getRendicontazione()">Calcola</button>
+      <button class="btn btn-primary" *ngIf="(selectedDate[1]==''||selectedEnte=='')||(selectedOperation=='')||isLoadingReport" disabled>Calcola</button>
+    </div> 
+     -->
+    
+    <div class="results">
+      <h2 *ngIf="!loadedReport">Results will appear here</h2>
+      <div *ngIf="!isLoadingReport&&loadedReport">
+        <div class="container-fluid">
+          <div class="row d-flex">
+            <!-- First div (left column) taking full height -->
+            <div class="full-height" style="flex: 1 1 25%;">
+              <app-contratti-div [values]="tblContrattiData"></app-contratti-div>
+            </div>
+        
+            <!-- Second div (right columns with two tables) -->
+            <div class="d-flex flex-column" style="flex: 1 1 75%;">
+              <!-- First table row -->
+              <div class="report-container">
+                <app-rendicontazione-table [headers]="verbaliHeaders" [values]="tblVerbali"></app-rendicontazione-table>
+              </div>
+              <br>
+              <!-- Second table row -->
+              <div class="report-container">
+                <app-rendicontazione-table [headers]="sanzioniHeaders" [values]="tblSanzioni"></app-rendicontazione-table>
+              </div>
+            </div>
+            <div class="row col-xs-12 mt-4 p-0">
+              <div class="col-4">
+                <div>
+                  <button class="btn btn-primary" (click)="openDetailsPage();">
+                    <i class="bi bi-box-arrow-up-right"></i> Dettaglio
+                  </button>
+                </div>
+              </div>
+              <div class="col-2"></div>
+              <div class="col-2"></div>
+              <div class="col-2"></div>
+              <div class="col-2 p-0 text-end">
+                @if(!isDownloadingExport){
+                  <fieldset class="form-group" *ngIf="!isDownloadingExport">
+                    <button class="btn btn-secondary" (click)="downloadCsv()"><i class="bi bi-arrow-bar-down"></i> Esporta CSV</button>
+                  </fieldset>
+                }@else{
+                  <div class="d-flex align-items-center justify-content-end">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Downloading...</span> <!-- This is hidden for accessibility -->
+                    </div>
+                    <span class="ms-2">Downloading...</span> <!-- This remains static -->
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <p *ngIf="selectedDateRange">Selected Date Range: {{ selectedDateRange }}</p>
+        <p *ngIf="selectedEnte">Selected Ente: {{ selectedEnte }}</p> -->
+      </div>
+      <div class="d-flex justify-content-center" *ngIf="isLoadingReport">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span> <!-- This is hidden for accessibility -->
+        </div>
+        <span class="ms-2">Loading...</span> <!-- This remains static -->
+      </div>
+    </div>
+</div>

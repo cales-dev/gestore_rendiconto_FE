@@ -1,4 +1,4 @@
 export interface UserInfo{
-    name:string;
-    email:string;
+    id: 1
+    username:"admin"
 }

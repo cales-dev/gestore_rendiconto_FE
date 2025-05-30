@@ -9,6 +9,8 @@ export class AuthService {
 
   private isLogged = new BehaviorSubject<boolean>(false);
   private userInfo = new BehaviorSubject<UserInfo>({} as UserInfo);
+  
+  userInfo$ = this.userInfo.asObservable();
   /* Metodo per impostare la sessione dell'utente dopo verifica del cookie */
   createSession(user:UserInfo){
     this.isLogged.next(true);
