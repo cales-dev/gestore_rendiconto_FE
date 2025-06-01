@@ -10,52 +10,67 @@
     </div> 
      -->
     
-    <div class="results">
-      <h2 *ngIf="!loadedReport">Results will appear here</h2>
-      <div *ngIf="!isLoadingReport&&loadedReport">
+      <div *ngIf="!isLoadingReport">
+        
+      <div class="results">
+        <div class="d-flex align-items-center">
+
+          <h2 class="m-0">Report Generale</h2>
+          <div class="vr me-2 ms-2"></div>
+          <i class="bi bi-pen-fill cursor-pointer" style="font-size: 21px;"></i>
+        </div>
         <div class="container-fluid">
           <div class="row d-flex">
+             <ngx-charts-pie-chart
+              [results]="pieData"
+              [legend]="true"
+              [labels]="true"
+              [doughnut]="false"
+              [explodeSlices]="false"
+              [gradient]="false"
+              [view]="[700, 400]">
+            </ngx-charts-pie-chart>
             <!-- First div (left column) taking full height -->
-            <div class="full-height" style="flex: 1 1 25%;">
+            <!-- <div class="full-height" style="flex: 1 1 25%;">
               <app-contratti-div [values]="tblContrattiData"></app-contratti-div>
             </div>
         
-            <!-- Second div (right columns with two tables) -->
+            Second div (right columns with two tables) 
             <div class="d-flex flex-column" style="flex: 1 1 75%;">
-              <!-- First table row -->
+              First table row 
               <div class="report-container">
                 <app-rendicontazione-table [headers]="verbaliHeaders" [values]="tblVerbali"></app-rendicontazione-table>
               </div>
               <br>
-              <!-- Second table row -->
+              Second table row 
               <div class="report-container">
                 <app-rendicontazione-table [headers]="sanzioniHeaders" [values]="tblSanzioni"></app-rendicontazione-table>
-              </div>
+              </div> -->
             </div>
             <div class="row col-xs-12 mt-4 p-0">
               <div class="col-4">
                 <div>
-                  <button class="btn btn-primary" (click)="openDetailsPage();">
+                  <!-- <button class="btn btn-primary" (click)="openDetailsPage();">
                     <i class="bi bi-box-arrow-up-right"></i> Dettaglio
-                  </button>
+                  </button> -->
                 </div>
               </div>
               <div class="col-2"></div>
               <div class="col-2"></div>
               <div class="col-2"></div>
               <div class="col-2 p-0 text-end">
-                @if(!isDownloadingExport){
+                <!-- @if(!isDownloadingExport){
                   <fieldset class="form-group" *ngIf="!isDownloadingExport">
                     <button class="btn btn-secondary" (click)="downloadCsv()"><i class="bi bi-arrow-bar-down"></i> Esporta CSV</button>
                   </fieldset>
                 }@else{
                   <div class="d-flex align-items-center justify-content-end">
                     <div class="spinner-border text-primary" role="status">
-                      <span class="visually-hidden">Downloading...</span> <!-- This is hidden for accessibility -->
+                      <span class="visually-hidden">Downloading...</span> <!-- This is hidden for accessibility
                     </div>
-                    <span class="ms-2">Downloading...</span> <!-- This remains static -->
+                    <span class="ms-2">Downloading...</span> <!-- This remains static 
                   </div>
-                }
+                } -->
               </div>
             </div>
           </div>
@@ -69,5 +84,4 @@
         </div>
         <span class="ms-2">Loading...</span> <!-- This remains static -->
       </div>
-    </div>
-</div>
+  </div>
