@@ -8,4 +8,9 @@ export interface SummaryData{
     rifcomune:string;
     totale_importo:number;
     num_verbali:number;
+    fissoinserito?:number,
+    fissospedito?:number,
+    percsanzione?:number,
+    fissoresponsabile?:number,
+    rendicontatoperc?:number, 
 }

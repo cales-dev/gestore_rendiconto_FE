@@ -14,3 +14,13 @@
     padding: 15px;
     border-radius: 8px;
 }
+
+.grid-dashboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 30px;
+  @media (min-width: 1324px) {
+    grid-template-columns: 2fr 1fr;
+  }
+}

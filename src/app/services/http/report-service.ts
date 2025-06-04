@@ -10,8 +10,14 @@ export class ReportService {
 
   constructor(private http:HttpClient) {}
 
-  public getReport(){
+  public getReport(ente?:string){
     let url=environment.baseUrl + "api/report/summary/";
+
+    if(ente){
+        url+=ente;
+    }
+    
     return this.http.get<ReportResponseModel>(url, {withCredentials:true});
   }
+  
 }
