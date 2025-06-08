@@ -1,4 +1,3 @@
-<app-header [username]="username"> </app-header>
 <sub-header [title]="'Dashboard'" [iconClass]="'bi bi-graph-up-arrow'"></sub-header>
 <div class="dashboard-container">
       <div *ngIf="!isLoadingReport">
@@ -11,7 +10,7 @@
           </div>
           <div class="container-fluid">
             <div class="back-container mt-4 cursor-pointer" *ngIf="isEnteselected" >
-              <h5 (click)="ngOnInit()"><i class="bi bi-arrow-left-circle"></i>Torna al Report Generale</h5>
+              <h5 (click)="ngOnInit()"><i class="bi bi-arrow-left-circle" style="font-size: 20px;"></i>Torna al Report Generale</h5>
               <div class="p-0 m-0 border-bottom container-fluid w-100"></div>
             </div>
             <div class="grid-dashboard">

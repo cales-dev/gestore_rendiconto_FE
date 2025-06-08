@@ -13,4 +13,7 @@ export interface SummaryData{
     percsanzione?:number,
     fissoresponsabile?:number,
     rendicontatoperc?:number, 
+    tot_pagati:number,
+    tot_da_pagare:number,
+    tot_rimborso:number
 }

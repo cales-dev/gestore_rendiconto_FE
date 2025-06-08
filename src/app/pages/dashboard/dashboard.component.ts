@@ -7,6 +7,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ReportResponseModel, SummaryData } from '../../model/dashboard.model';
 import { SubHeaderComponent } from "../../components/sub-header/sub-header.component";
 import { fromEvent } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface StatsDataModel{
   totale_importi:number,
@@ -21,7 +22,7 @@ export interface StatsDataModel{
 
 @Component({
   selector: 'app-dashboard',
-  imports: [HeaderComponent, CommonModule, NgxChartsModule, SubHeaderComponent],
+  imports: [CommonModule, NgxChartsModule, SubHeaderComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -35,21 +36,20 @@ export class DashboardComponent implements OnInit{
 
   pieData: { name: string; value: number }[] = [];
   selectedEnte:string="";
-  pieGraphTitle:string="Totale Importi per Ente";
+  pieGraphTitle:string="";
   summaryStatsTable:string="Statistiche globali";
   // pieGraphTitle:string="Totale Importi per Ente";
   statsData:StatsDataModel={} as StatsDataModel;
 
-  constructor(public authService:AuthService, private reportService:ReportService){
+  constructor(public authService:AuthService, private reportService:ReportService, private router:Router){
     
 
     
   }
   ngOnInit(): void {
-    this.authService.userInfo$.subscribe(()=>{
-      this.username=this.authService.getUser().username
-    });
+    this.pieGraphTitle="Totale Importi per Ente";
 
+   
     this.isLoadingReport=true;
     this.isEnteselected=false;
     this.reportService.getReport().subscribe({
@@ -75,23 +75,28 @@ export class DashboardComponent implements OnInit{
       event={name:event}
     }
 
+    this.pieGraphTitle = "Stato Verbali - "+ event.name;
     this.isLoadingReport = true;
-    this.title = "Report "+event.name;
+    this.title = "Report "+ event.name;
     this.selectedEnte = event.name;
     this.isEnteselected = true
     this.summaryStatsTable = "Dettagli contratto"
     this.reportService.getReport(event.name).subscribe({
       next:(res:ReportResponseModel)=>{
         this.isLoadingReport=false;
-        let name=res.result[0].rifcomune;
-        let value=res.result[0].totale_importo;
+        
+        let pagati = res.result[0].tot_pagati;
+        let da_pagare = res.result[0].tot_da_pagare;
+        let rimborso = res.result[0].tot_rimborso;
+        let totale = res.result[0].num_verbali;
 
-        let data={
-          name: name,
-          value: value
-        }
+        let lavorati = pagati + da_pagare + rimborso;
 
-        this.pieData = [data];
+        this.pieData = [
+          { name: "Pagato", value: pagati },
+          { name: "Da Pagare", value: da_pagare },
+          { name: "Rimborso", value: rimborso }
+        ];
         
         this.statsData.fissoinserito=res.result[0].fissoinserito;
         this.statsData.fissoresponsabile=res.result[0].fissoresponsabile;
@@ -125,6 +130,6 @@ export class DashboardComponent implements OnInit{
   }
   
   openDetailsPage(){
-
+    this.router.navigate(['/details']);
   }
 }
