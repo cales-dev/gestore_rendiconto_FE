@@ -1,13 +1,11 @@
 <div class="p-2 m-2 row">
-    <div class="col ps-4 d-flex d-flex-row small align-items-center">
-        <i class="{{iconClass}}" style="font-size: 30px;"></i>
-      <div style="width: 10px;"></div>
-      <div class="col-auto">
-        <span class="fw-semibold" style="font-size: 20px;">
-          {{title}}
-        </span>
-      </div>
+    <div class="col-4">
+      <span class="fw-semibold" style="font-size: 20px;">
+      <i class="{{iconClass}}" style="font-size: 30px;"></i>&nbsp;&nbsp;{{title}}
+      </span>
+    </div>
+    <div class="col-8 d-flex justify-content-end align-items-center cursor-pointer" *ngIf="activateGoBack" (click)="back()">
+        <i class="bi bi-arrow-left-circle" style="font-size: 30px;"></i> &nbsp; Torna indietro
     </div>
 </div>
 <div class="p-0 m-0 border-bottom container-fluid w-100"></div>
-

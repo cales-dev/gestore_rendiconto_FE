@@ -37,7 +37,7 @@
                <div class="stats" *ngIf="isEnteselected">
                   <h5>{{summaryStatsTable}}</h5>
                   <li>Fisso Inserito: {{ statsData.fissoinserito | number:'1.2-2' }} €</li>
-                  <li>Fisso Spedito: {{ statsData.fissospedito }}</li>
+                  <li>Fisso Spedito: {{ statsData.fissospedito | number:'1.2-2' }} €</li>
                   <li>Percentuale Sanzione: {{ statsData.percsanzione | number:'1.2-2' }} %</li>
                   <li>Fisso Responsabile: {{ statsData.fissoresponsabile | number:'1.2-2' }} €</li>
                   <li>% sul Rendicontato: {{ statsData.rendicontatoperc | number:'1.2-2' }} %</li>

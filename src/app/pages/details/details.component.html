@@ -1,1 +1,329 @@
-<sub-header [title]="'Dettaglio'" [iconClass]="'bi bi-search'"></sub-header>
+<sub-header [title]="'Dettaglio'" [iconClass]="'bi bi-search'" [activateGoBack]="true" (onBack)="returnToDetails()"></sub-header>
+<div class="pt-2 pb-4" style="margin: 1%!important;">
+  <!-- <input class="form-control mb-3" id="tableFilterOrdinario" type="text" placeholder="Filter rows..." onkeyup="filterTable($event)"> -->
+  
+  @if(!loading){
+  <div class="row d-flex align-items-center">
+    <div class="col-1">
+      <button class="btn btn-outline-secondary" *ngIf="isFilterActive" (click)="resetFilter();"> <i class="bi bi-arrow-repeat"></i> Reset</button>
+      <button class="btn btn-outline-secondary" *ngIf="!isFilterActive" disabled> <i class="bi bi-arrow-repeat"></i> Reset</button>
+    </div>
+    <div class="col-2 d-flex justify-content-start">
+      @if(!isDownloadingExport){
+        <fieldset class="form-group" *ngIf="!isDownloadingExport">
+          <button class="btn btn-secondary" (click)="downloadCsv()"><i class="bi bi-arrow-bar-down"></i> Esporta CSV</button>
+        </fieldset>
+      }@else{
+        <div class="d-flex align-items-center justify-content-end">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Downloading...</span> <!-- This is hidden for accessibility -->
+          </div>
+          <span class="ms-2">Downloading...</span> <!-- This remains static -->
+        </div>
+      }    
+    </div>
+    <div class="col-2">
+      <div class=" d-flex align-items-center">
+        <!-- <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="customSwitch1" [(ngModel)]="onlyWithOldImport" (ngModelChange)="showOnlyRendicontati();">
+          <label class="form-check-label" for="customSwitch1">Escludi non rendicontati</label>
+        </div> -->
+      </div>
+    </div>
+    <div class="col-2">
+      <div class=" d-flex align-items-center">
+        <!-- <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="customSwitch1" [(ngModel)]="onlyDuplicated" (ngModelChange)="showOnlyDuplicated();">
+          <label class="form-check-label" for="customSwitch1">Mostra duplicati</label>
+        </div> -->
+      </div>
+    </div>
+    <div class="col-1"></div>
+    <div class="col-2 d-flex justify-content-end">
+      <button class="btn btn-primary" (click)="uploadCsv();"> <i class="bi bi-arrow-bar-up"></i> Carica CSV</button>
+    </div>
+    <div class="col-1 d-flex justify-content-end">
+      <!-- <app-recupero-selector [title]="'Chiudi'" [isChecked]="canClose" (onChecked)="canClose=$event"></app-recupero-selector> -->
+    </div>
+    <div class="col-1 d-flex justify-content-end">
+      <button class="btn btn-outline-primary" *ngIf="canSave && !alreadyRendicontato" (click)="saveCsv();"> <i class="bi bi-floppy"></i> Salva</button>
+      <button class="btn btn-outline-primary" *ngIf="!canSave && !alreadyRendicontato" disabled> <i class="bi bi-floppy"></i> Salva</button>
+     
+      <!-- <div class="tooltip-wrapper" [ngbTooltip]="'Impossibile salvare, rendicontazione chiusa in precedenza'">
+        <button #target class="btn btn-secondary" *ngIf="alreadyRendicontato" disabled>
+          <i class="bi bi-floppy"></i> Salva
+        </button>
+      </div> -->
+    </div>
+  </div>
+
+  <div class="table-container mt-4">
+    <table class="table table-bordered mt-3" id="dataTableOrdinario">
+      <thead>
+        <!-- <ng-template #filterSelection>
+          <app-filter 
+          [item]="currentFilterSelection"
+          [filterArray]="['Pagato','Spese','Importo','SpesePostali','SpeseProcedura','SpeseComando','DaRimborsare']"
+          (onApplyFilter)="applyFilter($event);"
+          (onResetFilter)="currentPopOver.close();"></app-filter>
+        </ng-template> -->
+
+        <tr>
+          <th class="title">
+              <!-- <i 
+              type="button"
+              [ngbPopover]="filterSelection"
+              [autoClose]="'outside'"
+              #popIdVerbale="ngbPopover"
+              triggers="manual"
+              container="body"
+              [placement]="'top'"
+              (click)="toggleFilter('IDVerbale', popIdVerbale);"
+              [ngClass]="filterStates['IDVerbale'] ? 'bi bi-filter-square-fill' : 'bi bi-filter-square'"></i>  -->
+              Id Verbale
+          </th>
+          <th class="title"> 
+            <!-- <i  
+            type="button"
+            [ngbPopover]="filterSelection"
+            [autoClose]="'outside'"
+            #popStato="ngbPopover"
+            triggers="manual"
+            container="body"
+            (click)="toggleFilter('StatoVerbale', popStato);"
+            [ngClass]="filterStates['StatoVerbale'] ? 'bi bi-filter-square-fill' : 'bi bi-filter-square'"></i> -->
+            Stato Verbale 
+          </th>
+          <!--class="title"6)">Altre Spese</th> -->
+          <th class="title">
+            <!-- <i 
+            type="button"
+            [ngbPopover]="filterSelection"
+            [autoClose]="'outside'"
+            #popImportoPagato="ngbPopover"
+            triggers="manual"
+            container="body"
+            (click)="toggleFilter('Pagato', popImportoPagato);"
+            [ngClass]="filterStates['Pagato'] ? 'bi bi-filter-square-fill' : 'bi bi-filter-square'"
+            ></i>  -->
+            Importo Pagato 
+          </th>
+          <th class="title">Data Pagamento</th>
+          <th class="title"> 
+            <!-- <i
+            type="button"
+            [ngbPopover]="filterSelection"
+            [autoClose]="'outside'"
+            #popTipoImporto="ngbPopover"
+            triggers="manual"
+            container="body"
+            (click)="toggleFilter('TipoImporto', popTipoImporto);"
+            [ngClass]="filterStates['TipoImporto'] ? 'bi bi-filter-square-fill' : 'bi bi-filter-square'"
+            ></i>  -->
+            Tipo Importo
+          </th>
+          <th class="title"> 
+            <!-- <i 
+            type="button"
+            [ngbPopover]="filterSelection"
+            [autoClose]="'outside'"
+            #popImportoSanzione="ngbPopover"
+            triggers="manual"
+            container="body"
+            (click)="toggleFilter('Importo', popImportoSanzione);"
+            [ngClass]="filterStates['Importo'] ? 'bi bi-filter-square-fill' : 'bi bi-filter-square'"> 
+            </i>  -->
+            Importo Sanzione 
+          </th>
+          <th class="title">
+            <!-- <i 
+            type="button"
+            [ngbPopover]="filterSelection"
+            [autoClose]="'outside'"
+            #popSpeseProcedura="ngbPopover"
+            triggers="manual"
+            container="body"
+            (click)="toggleFilter('SpeseProcedura', popSpeseProcedura);"
+            [ngClass]="filterStates['SpeseProcedura'] ? 'bi bi-filter-square-fill' : 'bi bi-filter-square'"></i> -->
+              Spese di procedura </th>
+          <th class="title"> 
+            <!-- <i 
+            type="button"
+            [ngbPopover]="filterSelection"
+            [autoClose]="'outside'"
+            #popSpesePostali="ngbPopover"
+            triggers="manual"
+            container="body"
+            (click)="toggleFilter('SpesePostali', popSpesePostali);"
+            [ngClass]="filterStates['SpesePostali'] ? 'bi bi-filter-square-fill' : 'bi bi-filter-square'"></i> -->
+            Spese Postali 
+            </th>
+          <th class="title">
+            <!-- <i 
+            type="button"
+            [ngbPopover]="filterSelection"
+            [autoClose]="'outside'"
+            #popSpeseComando="ngbPopover"
+            triggers="manual"
+            container="body"
+            (click)="toggleFilter('SpeseComando', popSpeseComando);"
+            [ngClass]="filterStates['SpeseComando'] ? 'bi bi-filter-square-fill' : 'bi bi-filter-square'">
+            </i>  -->
+            Spese Comando 
+          </th>
+          <th class="title">
+            <!-- <i 
+            type="button"
+            [ngbPopover]="filterSelection"
+            [autoClose]="'outside'"
+            #popDaRimborsare="ngbPopover"
+            triggers="manual"
+            container="body"
+            (click)="toggleFilter('DaRimborsare', popDaRimborsare);"
+            [ngClass]="filterStates['DaRimborsare'] ? 'bi bi-filter-square-fill' : 'bi bi-filter-square'">
+            </i>  -->
+            Da Rimborsare 
+          </th>
+        </tr>
+      </thead>
+      
+      <tbody>
+          <tr *ngFor="let item of detailsData; index as i" [ngClass]="{'evidenziato': item.OldImporto != null, 'evidenziato-red': item.FlagMinorePagato != null && item.FlagMinorePagato != 0, 'evidenziato-duplicato': item.Duplicato != null}">
+            <td class="col-auto text-end">{{item.id}}</td>
+            <td class="col-auto text-end">{{item.stato}}</td>
+            <!-- <td class="col-auto text-end">{{item.AltreSpese}}</td> Altre Spese rimosso-->
+            <td class="col-auto text-end">{{item.importo_pagato}} €</td>
+            <td class="col-auto text-end">{{item.data_pagamento | date:'dd/MM/yyyy'}}</td>
+            <td class="col-auto text-end">{{item.tipo}}</td>
+            <td class="col-auto text-end">{{item.importo}} €</td>
+            <td class="col-auto text-end">{{item.speseprocedura}} €</td>
+            <td class="col-auto text-end">{{item.spesepostali}} €</td>
+            <td class="col-auto text-end">{{item.spesecomando}} €</td>
+            <td class="col-auto text-end">{{item.rimborso}} €</td>
+            
+            
+            <!-- <td class="col-auto text-end">{{item.DataPagamento | date: 'dd/MM/yyyy'}}</td>
+            <td class="col-auto text-end">{{item.TipoImporto}}</td>
+            <td class="col-auto text-end">
+              <div class="d-flex justify-content-end align-items-baseline">
+                <div class="first-number">
+                  {{formatNumbers(item.Importo)}}
+                </div>
+                |
+                <div class="second-number">
+                  @if(formatNumbers(item.RendicontatoSanzione)!=formatNumbers(item.Importo)){
+                    <span class="rendicontazione-alert">
+                      {{formatNumbers(item.RendicontatoSanzione)}}
+                    </span>
+                  }@else{
+                    {{formatNumbers(item.Importo)}}
+                  }
+                </div>
+              </div>
+            </td>
+            
+            <td class="col-auto text-end">{{formatNumbers(item.Aggio)}}</td> Aggio
+            <td class="col-auto text-end">
+              <div class="d-flex justify-content-end align-items-baseline">
+                <div class="first-number">
+                  {{formatNumbers(item.SpeseProcedura)}}
+                </div>
+                |
+                <div class="second-number">
+                  @if(formatNumbers(item.RendicontatoSpeseProcedura)!=formatNumbers(item.SpeseProcedura)){
+                    <span class="rendicontazione-alert">
+                      {{formatNumbers(item.RendicontatoSpeseProcedura)}}
+                    </span>
+                  }@else{
+                    {{formatNumbers(item.SpeseProcedura)}}
+                  }
+                </div>
+              </div>
+            </td>
+            <td class="col-auto text-end">
+              <div class="d-flex justify-content-end align-items-baseline">
+                <div class="first-number">
+                  {{formatNumbers(item.SpesePostali)}}
+                </div>
+                |
+                <div class="second-number">
+                  @if(formatNumbers(item.RendicontatoSpesePostali)!=formatNumbers(item.SpesePostali)){
+                    <span class="rendicontazione-alert">
+                      {{formatNumbers(item.RendicontatoSpesePostali)}}
+                    </span>
+                  }@else{
+                    {{formatNumbers(item.SpesePostali)}}
+                  }
+                </div>
+              </div>
+            </td>
+            <td class="col-auto text-end">
+              <div class="d-flex justify-content-end align-items-baseline">
+                <div class="first-number">
+                  {{formatNumbers(item.SpeseComando)}} 
+                </div>
+                |
+                <div class="second-number">
+                  @if(formatNumbers(item.RendicontatoSpeseComando)!=formatNumbers(item.SpeseComando)){
+                    <span class="rendicontazione-alert">
+                      {{formatNumbers(item.RendicontatoSpeseComando)}}
+                    </span>
+                  }@else{
+                    {{formatNumbers(item.SpeseComando)}}
+                  }
+                </div>
+              </div>
+            </td>
+            <td class="col-auto text-end">{{formatNumbers(item.DaRimborsare)}}</td>
+            
+            <td class="col-auto text-end">
+              <div class="d-flex justify-content-end align-items-baseline">
+                <div class="first-number">
+                  {{formatNumbers(item.SpeseRecupero)}} 
+                </div>
+                |
+                <div class="second-number">
+                  @if(formatNumbers(item.RendicontatoSpeseRecupero)!=formatNumbers(item.SpeseRecupero)){
+                    <span class="rendicontazione-alert">
+                      {{formatNumbers(item.RendicontatoSpeseRecupero)}}
+                    </span>
+                  }@else{
+                    {{formatNumbers(item.SpeseRecupero)}}
+                  }
+                </div>
+              </div>
+            </td>
+            <td class="col-auto text-end">
+              <div class="d-flex justify-content-end align-items-baseline">
+                <div class="first-number">
+                  {{formatNumbers(item.SpeseNetwork)}} 
+                </div>
+                |
+                <div class="second-number">
+                  @if(formatNumbers(item.RendicontatoSpeseNetwork)!=formatNumbers(item.SpeseNetwork)){
+                    <span class="rendicontazione-alert">
+                      {{formatNumbers(item.RendicontatoSpeseNetwork)}}
+                    </span>
+                  }@else{
+                    {{formatNumbers(item.SpeseNetwork)}}
+                  }
+                </div>
+              </div>
+            </td> -->
+          </tr>
+      </tbody>
+    </table>
+  </div>
+}@else {
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span> <!-- This is hidden for accessibility -->
+    </div>
+    <span class="ms-2">Loading...</span> <!-- This remains static -->
+  </div>
+}
+  <div class="pagination-container mt-2">
+    <button class="btn btn-secondary" (click)="prevPage();">Prev</button>
+    <button class="btn btn-secondary" (click)="nextPage();">Next</button>
+  </div>
+</div>

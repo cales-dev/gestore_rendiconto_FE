@@ -35,6 +35,8 @@ export class DashboardComponent implements OnInit{
   isEnteselected:boolean=false;
 
   pieData: { name: string; value: number }[] = [];
+
+  selectedIdEnte:number=0;
   selectedEnte:string="";
   pieGraphTitle:string="";
   summaryStatsTable:string="Statistiche globali";
@@ -69,7 +71,7 @@ export class DashboardComponent implements OnInit{
   }
 
   onEnteSelected(event:any){
-    /* Quando utente click legenda invece di grafico passa solo nome ente senza oggetto, 
+    /* Quando utente clicca la legenda invece del grafico passa solo nome ente senza oggetto, 
     conversione per resituire comunque i dati necessari */
     if(typeof event === 'string'){
       event={name:event}
@@ -84,13 +86,10 @@ export class DashboardComponent implements OnInit{
     this.reportService.getReport(event.name).subscribe({
       next:(res:ReportResponseModel)=>{
         this.isLoadingReport=false;
-        
+        this.selectedIdEnte=res.result[0].id;
         let pagati = res.result[0].tot_pagati;
         let da_pagare = res.result[0].tot_da_pagare;
         let rimborso = res.result[0].tot_rimborso;
-        let totale = res.result[0].num_verbali;
-
-        let lavorati = pagati + da_pagare + rimborso;
 
         this.pieData = [
           { name: "Pagato", value: pagati },
@@ -130,6 +129,8 @@ export class DashboardComponent implements OnInit{
   }
   
   openDetailsPage(){
+    localStorage.setItem("ente",this.selectedEnte);
+    localStorage.setItem("ente_id",this.selectedIdEnte.toString());
     this.router.navigate(['/details']);
   }
 }

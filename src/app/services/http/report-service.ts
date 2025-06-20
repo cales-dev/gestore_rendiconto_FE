@@ -19,5 +19,14 @@ export class ReportService {
     
     return this.http.get<ReportResponseModel>(url, {withCredentials:true});
   }
-  
+
+  public getDetails(ente:string){
+    let url=environment.baseUrl + "api/report/details/";
+
+    if(ente){
+        url+=ente;
+    }
+    
+    return this.http.get<ReportResponseModel>(url, {withCredentials:true});
+  }
 }
