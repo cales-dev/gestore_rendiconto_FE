@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { AuthService } from '../../services/local/auth.service';
-import { ReportService } from '../../services/http/report-service';
+import { ReportService } from '../../services/http/report.service';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ReportResponseModel, SummaryData } from '../../model/dashboard.model';
