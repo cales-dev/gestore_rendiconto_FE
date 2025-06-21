@@ -188,129 +188,129 @@
       </thead>
       
       <tbody>
-          <tr *ngFor="let item of detailsData; index as i" [ngClass]="{'evidenziato': item.OldImporto != null, 'evidenziato-red': item.FlagMinorePagato != null && item.FlagMinorePagato != 0, 'evidenziato-duplicato': item.Duplicato != null}">
-            <td class="col-auto text-end">{{item.id}}</td>
-            <td class="col-auto text-end">{{item.stato}}</td>
-            <!-- <td class="col-auto text-end">{{item.AltreSpese}}</td> Altre Spese rimosso-->
-            <td class="col-auto text-end">{{item.importo_pagato}} €</td>
-            <td class="col-auto text-end">{{item.data_pagamento | date:'dd/MM/yyyy'}}</td>
-            <td class="col-auto text-end">{{item.tipo}}</td>
-            <td class="col-auto text-end">{{item.importo}} €</td>
-            <td class="col-auto text-end">{{item.speseprocedura}} €</td>
-            <td class="col-auto text-end">{{item.spesepostali}} €</td>
-            <td class="col-auto text-end">{{item.spesecomando}} €</td>
-            <td class="col-auto text-end">{{item.rimborso}} €</td>
-            
-            
-            <!-- <td class="col-auto text-end">{{item.DataPagamento | date: 'dd/MM/yyyy'}}</td>
-            <td class="col-auto text-end">{{item.TipoImporto}}</td>
-            <td class="col-auto text-end">
-              <div class="d-flex justify-content-end align-items-baseline">
-                <div class="first-number">
+        <tr *ngFor="let item of detailsData; index as i" [ngClass]="{'evidenziato': item.OldImporto != null, 'evidenziato-red': item.FlagMinorePagato != null && item.FlagMinorePagato != 0, 'evidenziato-duplicato': item.Duplicato != null}">
+          <td class="col-auto text-end">{{item.id}}</td>
+          <td class="col-auto text-end">{{item.stato}}</td>
+          <!-- <td class="col-auto text-end">{{item.AltreSpese}}</td> Altre Spese rimosso-->
+          <td class="col-auto text-end">{{item.importo_pagato}} €</td>
+          <td class="col-auto text-end">{{item.data_pagamento | date:'dd/MM/yyyy'}}</td>
+          <td class="col-auto text-end">{{item.tipo}}</td>
+          <td class="col-auto text-end">{{item.importo}} €</td>
+          <td class="col-auto text-end">{{item.speseprocedura}} €</td>
+          <td class="col-auto text-end">{{item.spesepostali}} €</td>
+          <td class="col-auto text-end">{{item.spesecomando}} €</td>
+          <td class="col-auto text-end">{{item.rimborso}} €</td>
+          
+          
+          <!-- <td class="col-auto text-end">{{item.DataPagamento | date: 'dd/MM/yyyy'}}</td>
+          <td class="col-auto text-end">{{item.TipoImporto}}</td>
+          <td class="col-auto text-end">
+            <div class="d-flex justify-content-end align-items-baseline">
+              <div class="first-number">
+                {{formatNumbers(item.Importo)}}
+              </div>
+              |
+              <div class="second-number">
+                @if(formatNumbers(item.RendicontatoSanzione)!=formatNumbers(item.Importo)){
+                  <span class="rendicontazione-alert">
+                    {{formatNumbers(item.RendicontatoSanzione)}}
+                  </span>
+                }@else{
                   {{formatNumbers(item.Importo)}}
-                </div>
-                |
-                <div class="second-number">
-                  @if(formatNumbers(item.RendicontatoSanzione)!=formatNumbers(item.Importo)){
-                    <span class="rendicontazione-alert">
-                      {{formatNumbers(item.RendicontatoSanzione)}}
-                    </span>
-                  }@else{
-                    {{formatNumbers(item.Importo)}}
-                  }
-                </div>
+                }
               </div>
-            </td>
-            
-            <td class="col-auto text-end">{{formatNumbers(item.Aggio)}}</td> Aggio
-            <td class="col-auto text-end">
-              <div class="d-flex justify-content-end align-items-baseline">
-                <div class="first-number">
+            </div>
+          </td>
+          
+          <td class="col-auto text-end">{{formatNumbers(item.Aggio)}}</td> Aggio
+          <td class="col-auto text-end">
+            <div class="d-flex justify-content-end align-items-baseline">
+              <div class="first-number">
+                {{formatNumbers(item.SpeseProcedura)}}
+              </div>
+              |
+              <div class="second-number">
+                @if(formatNumbers(item.RendicontatoSpeseProcedura)!=formatNumbers(item.SpeseProcedura)){
+                  <span class="rendicontazione-alert">
+                    {{formatNumbers(item.RendicontatoSpeseProcedura)}}
+                  </span>
+                }@else{
                   {{formatNumbers(item.SpeseProcedura)}}
-                </div>
-                |
-                <div class="second-number">
-                  @if(formatNumbers(item.RendicontatoSpeseProcedura)!=formatNumbers(item.SpeseProcedura)){
-                    <span class="rendicontazione-alert">
-                      {{formatNumbers(item.RendicontatoSpeseProcedura)}}
-                    </span>
-                  }@else{
-                    {{formatNumbers(item.SpeseProcedura)}}
-                  }
-                </div>
+                }
               </div>
-            </td>
-            <td class="col-auto text-end">
-              <div class="d-flex justify-content-end align-items-baseline">
-                <div class="first-number">
+            </div>
+          </td>
+          <td class="col-auto text-end">
+            <div class="d-flex justify-content-end align-items-baseline">
+              <div class="first-number">
+                {{formatNumbers(item.SpesePostali)}}
+              </div>
+              |
+              <div class="second-number">
+                @if(formatNumbers(item.RendicontatoSpesePostali)!=formatNumbers(item.SpesePostali)){
+                  <span class="rendicontazione-alert">
+                    {{formatNumbers(item.RendicontatoSpesePostali)}}
+                  </span>
+                }@else{
                   {{formatNumbers(item.SpesePostali)}}
-                </div>
-                |
-                <div class="second-number">
-                  @if(formatNumbers(item.RendicontatoSpesePostali)!=formatNumbers(item.SpesePostali)){
-                    <span class="rendicontazione-alert">
-                      {{formatNumbers(item.RendicontatoSpesePostali)}}
-                    </span>
-                  }@else{
-                    {{formatNumbers(item.SpesePostali)}}
-                  }
-                </div>
+                }
               </div>
-            </td>
-            <td class="col-auto text-end">
-              <div class="d-flex justify-content-end align-items-baseline">
-                <div class="first-number">
-                  {{formatNumbers(item.SpeseComando)}} 
-                </div>
-                |
-                <div class="second-number">
-                  @if(formatNumbers(item.RendicontatoSpeseComando)!=formatNumbers(item.SpeseComando)){
-                    <span class="rendicontazione-alert">
-                      {{formatNumbers(item.RendicontatoSpeseComando)}}
-                    </span>
-                  }@else{
-                    {{formatNumbers(item.SpeseComando)}}
-                  }
-                </div>
+            </div>
+          </td>
+          <td class="col-auto text-end">
+            <div class="d-flex justify-content-end align-items-baseline">
+              <div class="first-number">
+                {{formatNumbers(item.SpeseComando)}} 
               </div>
-            </td>
-            <td class="col-auto text-end">{{formatNumbers(item.DaRimborsare)}}</td>
-            
-            <td class="col-auto text-end">
-              <div class="d-flex justify-content-end align-items-baseline">
-                <div class="first-number">
-                  {{formatNumbers(item.SpeseRecupero)}} 
-                </div>
-                |
-                <div class="second-number">
-                  @if(formatNumbers(item.RendicontatoSpeseRecupero)!=formatNumbers(item.SpeseRecupero)){
-                    <span class="rendicontazione-alert">
-                      {{formatNumbers(item.RendicontatoSpeseRecupero)}}
-                    </span>
-                  }@else{
-                    {{formatNumbers(item.SpeseRecupero)}}
-                  }
-                </div>
+              |
+              <div class="second-number">
+                @if(formatNumbers(item.RendicontatoSpeseComando)!=formatNumbers(item.SpeseComando)){
+                  <span class="rendicontazione-alert">
+                    {{formatNumbers(item.RendicontatoSpeseComando)}}
+                  </span>
+                }@else{
+                  {{formatNumbers(item.SpeseComando)}}
+                }
               </div>
-            </td>
-            <td class="col-auto text-end">
-              <div class="d-flex justify-content-end align-items-baseline">
-                <div class="first-number">
-                  {{formatNumbers(item.SpeseNetwork)}} 
-                </div>
-                |
-                <div class="second-number">
-                  @if(formatNumbers(item.RendicontatoSpeseNetwork)!=formatNumbers(item.SpeseNetwork)){
-                    <span class="rendicontazione-alert">
-                      {{formatNumbers(item.RendicontatoSpeseNetwork)}}
-                    </span>
-                  }@else{
-                    {{formatNumbers(item.SpeseNetwork)}}
-                  }
-                </div>
+            </div>
+          </td>
+          <td class="col-auto text-end">{{formatNumbers(item.DaRimborsare)}}</td>
+          
+          <td class="col-auto text-end">
+            <div class="d-flex justify-content-end align-items-baseline">
+              <div class="first-number">
+                {{formatNumbers(item.SpeseRecupero)}} 
               </div>
-            </td> -->
-          </tr>
+              |
+              <div class="second-number">
+                @if(formatNumbers(item.RendicontatoSpeseRecupero)!=formatNumbers(item.SpeseRecupero)){
+                  <span class="rendicontazione-alert">
+                    {{formatNumbers(item.RendicontatoSpeseRecupero)}}
+                  </span>
+                }@else{
+                  {{formatNumbers(item.SpeseRecupero)}}
+                }
+              </div>
+            </div>
+          </td>
+          <td class="col-auto text-end">
+            <div class="d-flex justify-content-end align-items-baseline">
+              <div class="first-number">
+                {{formatNumbers(item.SpeseNetwork)}} 
+              </div>
+              |
+              <div class="second-number">
+                @if(formatNumbers(item.RendicontatoSpeseNetwork)!=formatNumbers(item.SpeseNetwork)){
+                  <span class="rendicontazione-alert">
+                    {{formatNumbers(item.RendicontatoSpeseNetwork)}}
+                  </span>
+                }@else{
+                  {{formatNumbers(item.SpeseNetwork)}}
+                }
+              </div>
+            </div>
+          </td> -->
+        </tr>
       </tbody>
     </table>
   </div>

@@ -51,7 +51,6 @@ export class DashboardComponent implements OnInit{
   ngOnInit(): void {
     this.pieGraphTitle="Totale Importi per Ente";
 
-   
     this.isLoadingReport=true;
     this.isEnteselected=false;
     this.reportService.getReport().subscribe({
@@ -86,7 +85,7 @@ export class DashboardComponent implements OnInit{
     this.reportService.getReport(event.name).subscribe({
       next:(res:ReportResponseModel)=>{
         this.isLoadingReport=false;
-        this.selectedIdEnte=res.result[0].id;
+        this.selectedIdEnte=res.result[0].ente_id;
         let pagati = res.result[0].tot_pagati;
         let da_pagare = res.result[0].tot_da_pagare;
         let rimborso = res.result[0].tot_rimborso;

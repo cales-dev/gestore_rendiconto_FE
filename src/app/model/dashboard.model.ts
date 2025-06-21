@@ -5,6 +5,7 @@ export interface ReportResponseModel{
 
 export interface SummaryData{
     id:number;
+    ente_id:number;
     rifcomune:string;
     totale_importo:number;
     num_verbali:number;
