@@ -1,0 +1,65 @@
+<div class="form-outline mb-4">
+    <div
+      [hidden]="nomeFile"
+      class="drop"
+      [ngClass]="fileErrorMessage ? ['wrong', getDragOverClass()] : getDragOverClass()"
+      (dragover)="dragOverFile($event)"
+      (drop)="dropFile($event)"
+      (dragleave)="dragLeaveFile($event)"> 
+  
+      <div class="text-center justify-content-center p-4" [ngClass]="fileErrorMessage ? 'wrong' : ''">
+        <div class="fileInfo">
+          @if (fileControl.value && fileControl.value.name) {
+            <span
+            >Il file <span class="fw-bold">{{ fileControl.value.name }} </span> verrà rinominato in:
+            </span>
+            <br />
+            <span class="fw-bold">{{ nomeFile }}</span>
+          }
+  
+          @if (fileErrorMessage) {
+            <span class="fw-bold"> {{ fileErrorMessage }} </span>
+          }
+  
+          @if (!fileControl.value && !fileErrorMessage) {
+            <div class="text-256eb3 mb-1">
+              <i class="fa-solid fa-upload fa-2x"></i>
+            </div>
+  <!--          <div class="text-center"><span class="fw-bold"> Trascina qui </span> il file che vuoi caricare</div>-->
+  
+  <!--          <small class="text-center"> oppure </small>-->
+          }
+        </div>
+        <div>
+         
+          <label class="btn text-256eb3 btn-xs btn-me" for="ticketFile">
+            <input
+            class="form-control"
+            [hidden]="true"
+            [formControl]="fileControl"
+            [accept]="acceptedType"
+            type="file"
+            (change)="onFileChangeEvent($event)"
+            [required]="true"
+            id="ticketFile" />
+            <i class="icon icon-sm icon-white bi bi-upload fs-2 drop-img"></i>
+            <br />
+            <span> <b>Trascina qui</b> i file che vuoi caricare</span>
+            <br />
+            oppure
+            <br />
+            <b>{{ labelFile }}</b>
+          </label>
+        </div>
+      </div>
+    </div>
+  
+    @if (nomeFile !== '') {
+      <div class="bg-f3fbff text-256eb3 fw-semibold p-3 d-flex justify-content-between">
+        <span>{{ fileControl.value.name }}<i class="ms-2 fa-solid fa-circle-check"></i></span>
+        <button class="btn p-0 text-256eb3" (click)="fileControl.reset(); nomeFile = ''">
+          <i class="ms-auto fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    }
+  </div>

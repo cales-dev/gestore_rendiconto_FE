@@ -6,6 +6,7 @@ import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { ReportService } from '../../services/http/report.service';
 import { CsvService } from '../../services/http/csv.service';
+import { ImportModalComponent } from '../../components/import-modal/import-modal.component';
 
 @Component({
   selector: 'app-details',
@@ -34,9 +35,10 @@ export class DetailsComponent {
   ente_id:string | null="";
   ente:string | null="";
   
-  constructor( private modalService:NgbModal, private router:Router, private reportService:ReportService, private csvService:CsvService) {}
+  constructor(private modalService:NgbModal, private router:Router, private reportService:ReportService, private csvService:CsvService) {}
   
   ngOnInit(): void {
+    this.loading=true;
     this.ente=localStorage.getItem("ente");
     this.ente_id=localStorage.getItem("ente_id");
     if(this.ente_id!=null){
@@ -44,9 +46,11 @@ export class DetailsComponent {
         next:(response)=>{
           console.log(response);
           this.detailsData=response.result;
+          this.loading=false;
         },
         error:(error)=>{
           console.log(error);
+          this.loading=false;
         }
       });  
     }else{
@@ -117,6 +121,8 @@ export class DetailsComponent {
   }
 
   uploadCsv() {
+    const modalService = this.modalService.open(ImportModalComponent, {centered: true, size: "lg"}
+    )
   }
   
   showOnlyRendicontati(){

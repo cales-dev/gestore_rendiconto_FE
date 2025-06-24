@@ -1,0 +1,42 @@
+<ng-container>
+    <div class="modal-header">
+        <h4 class="modal-title ms-1 row fw-bold color-256eb3" id="modal-basic-title">{{ title }}</h4>
+    </div>
+    <div class="modal-body p-4">
+        <form enctype="multipart/form-data">
+            <div class="border p-4">
+                <small class="text-secondary fs-6"> Formati supportati:
+                    {{ 'csv' }}
+                </small>
+                <!--File input drag & drop-->
+                <app-drag-and-drop-file
+                [fileControl]="uploadFileForm.controls.file"
+                [fileErrorMessage]="fileErrorMessage"
+                [lastUploadedFile]="lastUploadedFile"
+                [(nomeFile)]="nomeFile"
+                [uploading]="uploading"
+                [acceptedType]="['text/csv','application/vnd.ms-excel','application/csv']">
+                </app-drag-and-drop-file>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer bg-e0ecf2">
+        <div class="d-flex w-100 justify-content-between">
+            <span class="fw-bold color-256eb3 cursor-pointer"
+                  (click)="activeModal.dismiss('Cross click')">Annulla</span>
+            @if (!isLoading) {
+                <button
+                        class="btn"
+                        [ngClass]="uploadFileForm.controls.file.value ? 'btn-primary' : 'btn-secondary'"
+                        [disabled]="!uploadFileForm.controls.file.value"
+                        *ngIf="uploadFileForm.controls.file"
+                        (click)="uploadFile()">
+                    Carica
+                </button>
+            } @else {
+                <div class="spinner-border text-primary" role="status">
+                </div>
+            }
+        </div>
+    </div>
+</ng-container>
