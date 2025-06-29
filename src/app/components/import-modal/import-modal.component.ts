@@ -67,7 +67,7 @@ export class ImportModalComponent {
   showVPNPassword = false;
   enableEucarisCredentialsChange: boolean = false;
 
-  selectedEnte:string='';
+  selectedEnteId:string='';
   dataDa:string='';
   dataA:string='';
   operazione:string='';
@@ -82,7 +82,7 @@ export class ImportModalComponent {
   ) {}
 
   ngOnInit() {
-  
+    this.selectedEnteId=localStorage.getItem("ente_id")!
   }
 
   ngAfterContentInit() {
@@ -101,7 +101,7 @@ export class ImportModalComponent {
     this.isLoading = true;
     if (this.uploadFileForm.controls.file.value) {
       const file = this.uploadFileForm.controls.file.value;
-      this.csvService.uploadCsv("1").subscribe({
+      this.csvService.uploadCsv(this.selectedEnteId, file).subscribe({
         next:()=>{
           this.isLoading=false;
           this.activeModal.close(true);

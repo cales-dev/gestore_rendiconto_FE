@@ -10,12 +10,12 @@
           </div>
           <div class="container-fluid">
             <div class="back-container mt-4 cursor-pointer" *ngIf="isEnteselected" >
-              <h5 (click)="ngOnInit()"><i class="bi bi-arrow-left-circle" style="font-size: 20px;"></i>Torna al Report Generale</h5>
+              <h5 (click)="ngOnInit()"><i class="bi bi-arrow-left-circle" style="font-size: 20px;"></i>&nbsp;Torna al Report Generale</h5>
               <div class="p-0 m-0 border-bottom container-fluid w-100"></div>
             </div>
             <div class="grid-dashboard">
               <div class="pie-graph">
-                  <h5>{{pieGraphTitle}}</h5>
+                <h5>{{pieGraphTitle}}</h5>
                 <ngx-charts-pie-chart
                   [results]="pieData"
                   [legend]="true"

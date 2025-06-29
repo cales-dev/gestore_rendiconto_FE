@@ -21,15 +21,13 @@ export class CsvService {
     });
   }
 
-  public uploadCsv(ente_id:string){
+  public uploadCsv(ente_id:string, csv:File){
     let url=environment.baseUrl + "api/csv/upload/";
 
     const formData=new FormData()
 
     formData.append("ente", ente_id);
-     return this.http.post(url,formData,{
-      responseType: 'blob',
-      observe: 'response'
-    });
+    formData.append("csv", csv);
+     return this.http.post(url,formData);
   }
 }

@@ -44,12 +44,10 @@ export class DetailsComponent {
     if(this.ente_id!=null){
       this.reportService.getDetails(this.ente_id).subscribe({
         next:(response)=>{
-          console.log(response);
           this.detailsData=response.result;
           this.loading=false;
         },
         error:(error)=>{
-          console.log(error);
           this.loading=false;
         }
       });  
@@ -97,7 +95,6 @@ export class DetailsComponent {
         const contentDisposition = res.headers.get("Content-Disposition");
 
         if (contentDisposition) {
-            console.log(contentDisposition)
             const match = contentDisposition.match(/filename="(.+)"/);
             if (match) filename = match[1];
         }
@@ -114,15 +111,16 @@ export class DetailsComponent {
 
         this.isDownloadingExport=false;
       },
-      error:()=>{
-
-      }
+      error:()=>{}
     })
   }
 
   uploadCsv() {
-    const modalService = this.modalService.open(ImportModalComponent, {centered: true, size: "lg"}
-    )
+    const modalService = this.modalService.open(ImportModalComponent, {centered: true, size: "lg"});
+
+    modalService.closed.subscribe((res:any)=>{
+      
+    })
   }
   
   showOnlyRendicontati(){

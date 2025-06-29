@@ -6,7 +6,7 @@
     <div class="row d-flex align-items-center">
       <div class="col-1">
         <button class="btn btn-outline-secondary" *ngIf="isFilterActive" (click)="resetFilter();"> <i class="bi bi-arrow-repeat"></i> Reset</button>
-        <button class="btn btn-outline-secondary" *ngIf="!isFilterActive" disabled> <i class="bi bi-arrow-repeat"></i> Reset</button>
+        <button class="btn btn-outline-secondary" *ngIf="!isFilterActive" disabled><i class="bi bi-arrow-repeat"></i> Reset</button>
       </div>
       <div class="col-2 d-flex justify-content-start">
         @if(!isDownloadingExport){

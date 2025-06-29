@@ -43,13 +43,10 @@ export class DashboardComponent implements OnInit{
   // pieGraphTitle:string="Totale Importi per Ente";
   statsData:StatsDataModel={} as StatsDataModel;
 
-  constructor(public authService:AuthService, private reportService:ReportService, private router:Router){
-    
-
-    
-  }
+  constructor(public authService:AuthService, private reportService:ReportService, private router:Router){}
+  
   ngOnInit(): void {
-    this.pieGraphTitle="Totale Importi per Ente";
+    this.pieGraphTitle="Totale Importi per Ente (€)";
 
     this.isLoadingReport=true;
     this.isEnteselected=false;
