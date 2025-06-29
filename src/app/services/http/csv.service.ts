@@ -27,7 +27,7 @@ export class CsvService {
     const formData=new FormData()
 
     formData.append("ente", ente_id);
-    formData.append("csv", csv);
+    formData.append("csv_file", csv);
      return this.http.post(url,formData);
   }
 }

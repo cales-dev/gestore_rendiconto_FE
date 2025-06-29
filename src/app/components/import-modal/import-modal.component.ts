@@ -107,7 +107,7 @@ export class ImportModalComponent {
           this.activeModal.close(true);
         },
         error:(error)=>{
-          alert(error.error);
+          alert(error.error.detail);
           this.isLoading=false;
         }
       })
