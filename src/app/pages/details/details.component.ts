@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { ReportService } from '../../services/http/report.service';
 import { CsvService } from '../../services/http/csv.service';
 import { ImportModalComponent } from '../../components/import-modal/import-modal.component';
+import { DetailsData } from '../../model/details.model';
+import { ConfirmModalComponent } from '../../components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-details',
@@ -15,7 +17,7 @@ import { ImportModalComponent } from '../../components/import-modal/import-modal
   styleUrl: './details.component.scss'
 })
 export class DetailsComponent {
-  detailsData:any[]=[];
+  detailsData:DetailsData[]=[];
   // filteredData:DetailsModel[] = [] as DetailsModel[];
   // // jsonData:DetailsModel[] = [] as DetailsModel[];
   loading:boolean=false;
@@ -39,11 +41,13 @@ export class DetailsComponent {
   
   ngOnInit(): void {
     this.loading=true;
+    this.canSave=false;
     this.ente=localStorage.getItem("ente");
     this.ente_id=localStorage.getItem("ente_id");
     if(this.ente_id!=null){
       this.reportService.getDetails(this.ente_id).subscribe({
         next:(response)=>{
+          this.detailsData=[];
           this.detailsData=response.result;
           this.loading=false;
         },
@@ -56,32 +60,29 @@ export class DetailsComponent {
     }
   }
 
-  formatNumbers(number:number){ 
-   
-  }
-
-  toggleFilter(field: string, popover:NgbPopover) {
-    
-  }
-
-  resetFilter(){
-    
-  }
-  
-  applyFilter(search:any) {
-
-  }
-
-  prevPage(){
-
-  }
-
-  nextPage(){
-
-  }
-
   saveCsv(){
+    const modalService = this.modalService.open(ConfirmModalComponent, {centered: true, size: "lg"});
+    const instance: ConfirmModalComponent = modalService.componentInstance;
 
+    instance.title="Conferma Salvataggio";
+
+    modalService.closed.subscribe((modalResult:boolean)=>{
+      if(modalResult){
+       //Salvataggio dei dati su tblpagamenti
+       this.reportService.save().subscribe({
+        next:(response)=>{
+          console.log(response)
+          if(response.ok==true){
+            //resetto la pagina e aggiorno le info
+            this.ngOnInit();
+          }
+        },  
+        error:()=>{
+          
+        }
+       })
+      }
+    });
   }
 
   downloadCsv(){
@@ -119,21 +120,27 @@ export class DetailsComponent {
     const modalService = this.modalService.open(ImportModalComponent, {centered: true, size: "lg"});
 
     modalService.closed.subscribe((res:any)=>{
-      
-    })
+      if(res){
+        // Metodo per leggere i nuovi dati dalla tabella temporanea
+        this.reportService.getTempData().subscribe({
+          next:(response)=>{
+            response.result.forEach(items => {
+              let index=this.detailsData.findIndex(x=>x.id_pagamento==items.id_pagamento)
+              this.detailsData[index].temp_importo=items.importo_sanzione;
+              this.detailsData[index].temp_importo_pagato=items.importo_pagato;
+              this.detailsData[index].temp_spesecomando=items.spese_comando;
+              this.detailsData[index].temp_spesepostali=items.spese_postali;
+              this.detailsData[index].temp_speseprocedura=items.spese_procedura;
+              this.detailsData[index].temp_rimborso=items.da_rimborsare;
+
+            });
+            this.canSave=true;
+          }
+        });
+      }
+    });
   }
   
-  showOnlyRendicontati(){
-  }
-
-  showOnlyDuplicated(){
-  }
-
-  openDetailsPage(IDVerbale:number, Anno:string) {
-  }
-
-  loadDataSet() {
-  }
 
   returnToDetails() {
    this.router.navigate(['/dashboard']);

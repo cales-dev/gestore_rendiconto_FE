@@ -1,0 +1,14 @@
+<ng-container>
+  <div class="modal-header">
+    <h4 class="modal-title ms-1 row fw-bold color-256eb3">{{ title }}</h4>
+  </div>
+  <div class="modal-body p-4">
+    <p>{{ message }}</p>
+  </div>
+  <div class="modal-footer bg-e0ecf2">
+    <div class="d-flex w-100 justify-content-between">
+      <span class="fw-bold color-256eb3 cursor-pointer" (click)="activeModal.dismiss()">Annulla</span>
+      <button class="btn btn-primary" (click)="activeModal.close(true)">Conferma</button>
+    </div>
+  </div>
+</ng-container>
