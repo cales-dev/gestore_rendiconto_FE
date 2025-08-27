@@ -33,7 +33,8 @@ export class AppComponent {
         }
       },
       error:()=>{
-        this.router.navigate(['/login']);
+        //Gestito nel file http-interceptor.ts
+        //this.router.navigate(['/login']);
         //TODO error managment
       }
     })  
